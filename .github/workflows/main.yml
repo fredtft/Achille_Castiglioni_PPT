@@ -50,4 +50,5 @@ jobs:
           strip_components: 1
           
           # On nettoie le dossier distant avant de copier
-          rm: true
+          rm: false
+          # rm: true
