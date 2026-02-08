@@ -4,7 +4,8 @@ export enum SlideType {
   QUOTE = 'QUOTE',
   CONTENT_SPLIT = 'CONTENT_SPLIT',
   TIMELINE = 'TIMELINE',
-  DETAILS = 'DETAILS'
+  DETAILS = 'DETAILS',
+  FEATURE = 'FEATURE'
 }
 
 export interface Slide {
@@ -15,7 +16,7 @@ export interface Slide {
   content?: string;
   quote?: string;
   author?: string;
-  images?: string[]; // Array per gestire 1 o 3 placeholder
+  images?: string[];
   imagePosition?: 'left' | 'right';
   list?: string[];
   notes?: string;
