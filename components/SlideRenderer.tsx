@@ -20,6 +20,11 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
     if (title.includes('san luca')) return 'san_luca';
     if (title.includes('toio')) return 'toio';
     if (title.includes('arco')) return 'arco';
+    if (title.includes('rompitratta')) return 'rompitratta';
+    if (title.includes('sleek')) return 'sleek';
+    if (title.includes('allunaggio')) return 'allunaggio';
+    if (title.includes('rr126')) return 'rr126';
+    if (title.includes('splugen')) return 'splugen';
     
     return title.replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
   };
@@ -217,7 +222,6 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
               })}
             </div>
           </div>
-          {/* Griglia immagini: Altezza aumentata al 40% e rimosso padding interno */}
           <div className="h-[40%] grid grid-cols-3 gap-0 bg-black border-t-2 border-[#ff4d00]/20">
             <Placeholder index={1} fit="contain" isDetail={true} className="bg-black border-r border-zinc-900/50" />
             <Placeholder index={2} fit="contain" isDetail={true} className="bg-black border-r border-zinc-900/50" />
