@@ -1,7 +1,6 @@
+
 {
-  "name": "Achille Castiglioni - Presentazione RUFA",
+  "name": "v2 Achille Castiglioni - Presentazione RUFA",
   "description": "Una presentazione interattiva sulla vita e le opere di Achille Castiglioni per l'università RUFA Milano.",
-  "requestFramePermissions": [
-    "camera"
-  ]
+  "requestFramePermissions": []
 }

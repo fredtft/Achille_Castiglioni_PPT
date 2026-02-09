@@ -28,30 +28,30 @@ import { slide25 } from './content_25';
 import { slide26 } from './content_26';
 
 export const initialSlides: Slide[] = [
-  slide01,
-  slide02,
-  slide03,
-  slide04,
-  slide05,
-  slide06,
-  slide07,
-  slide08,
-  slide09,
-  slide10,
-  slide11,
-  slide12,
-  slide13,
-  slide14,
-  slide15,
-  slide16,
-  slide17,
-  slide18,
-  slide19,
-  slide20,
-  slide21,
-  slide22,
-  slide23,
-  slide24,
-  slide25,
-  slide26
+  slide01, // Frontespizio
+  slide03, // Percorso Biografico (Timeline)
+  slide02, // Pensiero e Metodo (L'umiltà dell'esperienza)
+  slide04, // Poetica: Ironia e Funzione
+  slide05, // Poetica: Il "Ready Made"
+  slide06, // Sgabello Mezzadro (Concept)
+  slide07, // Mezzadro (Dettagli tecnici e componenti)
+  slide12, // Lampada Toio (Concept e significato)
+  slide13, // Toio (Componenti e sorgente)
+  slide08, // Sedile Sella (Concept del "sedersi in piedi")
+  slide09, // Sella (Dettagli su equilibrio e materiali)
+  slide20, // Sedile Allunaggio (Sperimentazione spaziale)
+  slide21, // Allunaggio (Struttura, seduta ed ecologia)
+  slide14, // Lampada Arco (Concept e status di icona)
+  slide15, // Arco (Analisi di marmo, stelo e calotta)
+  slide24, // Splügen Bräu (Architettura d'interni e contesto)
+  slide25, // Splügen Bräu (Organizzazione e arredi iconici nati dal progetto)
+  slide22, // Radiofonografo RR126 (Concept antropomorfo)
+  slide23, // RR126 (Mobilità, modularità e materiali)
+  slide10, // Poltrona San Luca (Rivoluzione ergonomica)
+  slide11, // San Luca (Scomposizione, ergonomia e rivestimento)
+  slide16, // Interruttore Rompitratta (Il capolavoro anonimo)
+  slide17, // Rompitratta (Dettagli su materiali, assemblaggio e produzione)
+  slide18, // Cucchiaio Sleek (Concept per risolvere un fastidio)
+  slide19, // Sleek (Genesi della forma e rapporto con il barattolo)
+  slide26  // Chiusura (Citazione finale sul fruitore)
 ];
