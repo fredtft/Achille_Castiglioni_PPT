@@ -122,19 +122,26 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide, isPrint = f
             <div className={`text-[#ff4d00] font-bold uppercase tracking-[0.5em] mt-2 ${isPrint ? 'text-sm' : 'text-lg'}`}>{slide.subtitle}</div>
           </div>
           
-          <div className="relative w-full flex-1 flex items-center px-4">
-            <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-zinc-900 -translate-y-1/2"></div>
+          <div className="relative w-full flex-1 flex items-center px-8 lg:px-20">
+            {/* Timeline Horizontal Axis (Orange) */}
+            <div className="absolute top-1/2 left-8 right-8 lg:left-20 lg:right-20 h-1 bg-[#ff4d00] -translate-y-1/2 shadow-[0_0_15px_rgba(255,77,0,0.3)]"></div>
+            
             <div className="flex justify-between relative w-full items-center">
               {slide.list?.map((item, i) => {
                 const [year, desc] = item.split(': ');
                 const isEven = i % 2 === 0;
                 return (
                   <div key={i} className={`flex flex-col items-center w-full relative group`}>
-                    <div className={`w-4 h-4 rounded-full bg-[#ff4d00] border-2 border-black z-10`}></div>
-                    <div className={`absolute left-1/2 -translate-x-1/2 w-px bg-zinc-800 ${isEven ? 'bottom-full mb-0 h-16' : 'top-full mt-0 h-16'}`}></div>
-                    <div className={`absolute left-1/2 -translate-x-1/2 w-40 text-center ${isEven ? 'bottom-[calc(100%+60px)]' : 'top-[calc(100%+60px)]'}`}>
-                      <div className={`text-[#ff4d00] font-black ${isPrint ? 'text-xl' : 'text-xl'} mb-1`}>{year}</div>
-                      <div className={`text-zinc-500 leading-relaxed font-medium px-2 ${isPrint ? 'text-[10px]' : 'text-[10px]'}`}>{desc}</div>
+                    {/* Event Dot */}
+                    <div className={`w-6 h-6 rounded-full bg-[#ff4d00] border-4 border-black z-10 shadow-[0_0_10px_rgba(255,77,0,0.5)] transition-transform group-hover:scale-125`}></div>
+                    
+                    {/* Vertical Connector */}
+                    <div className={`absolute left-1/2 -translate-x-1/2 w-[2px] bg-zinc-800 group-hover:bg-[#ff4d00]/50 transition-colors ${isEven ? 'bottom-full mb-0 h-20' : 'top-full mt-0 h-20'}`}></div>
+                    
+                    {/* Content Box */}
+                    <div className={`absolute left-1/2 -translate-x-1/2 w-48 text-center ${isEven ? 'bottom-[calc(100%+90px)]' : 'top-[calc(100%+90px)]'}`}>
+                      <div className={`text-[#ff4d00] font-black ${isPrint ? 'text-2xl' : 'text-2xl lg:text-3xl'} mb-2 tracking-tighter`}>{year}</div>
+                      <div className={`text-zinc-400 leading-tight font-medium px-2 ${isPrint ? 'text-xs' : 'text-[11px] lg:text-xs'}`}>{desc}</div>
                     </div>
                   </div>
                 );
