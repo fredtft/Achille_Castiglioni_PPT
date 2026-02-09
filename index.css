@@ -10,7 +10,7 @@ body {
     font-family: 'Playfair Display', serif;
 }
 
-/* Custom scrollbar for notes */
+/* Custom scrollbar for notes and preview */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -63,17 +63,22 @@ body {
         overflow: visible !important;
         height: auto !important;
         background: black !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
+    /* Hide everything except the print container */
     #root > div > main,
     #root > div > .fixed,
-    #root > div > .absolute {
+    #root > div > .absolute,
+    .no-print {
         display: none !important;
     }
 
     .print-container {
         display: block !important;
         width: 100% !important;
+        position: static !important;
     }
 
     .print-slide-wrapper {
@@ -84,15 +89,20 @@ body {
         position: relative !important;
         overflow: hidden !important;
         display: block !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
+        background: black !important;
     }
 
-    /* Assicurati che SlideRenderer occupi tutto lo spazio */
+    /* Ensure SlideRenderer fills the page */
     .print-slide-wrapper > div {
-        height: 100% !important;
-        width: 100% !important;
+        height: 100vh !important;
+        width: 100vw !important;
     }
+}
+
+/* Modal styles for preview */
+.print-preview-overlay {
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(10px);
 }
 
 .print-container {
