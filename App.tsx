@@ -62,7 +62,7 @@ const App: React.FC = () => {
 
   return (
     <div 
-      className="relative h-[100dvh] w-screen bg-black overflow-hidden flex flex-col"
+      className="relative h-[100dvh] w-screen bg-white overflow-hidden flex flex-col"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -80,14 +80,14 @@ const App: React.FC = () => {
           <button 
             onClick={prevSlide}
             disabled={currentIndex === 0}
-            className={`w-8 h-8 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-zinc-900/80 border border-zinc-800 text-white hover:bg-[#ff4d00] transition-all disabled:opacity-30`}
+            className={`w-8 h-8 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/90 border border-zinc-200 text-zinc-900 hover:bg-[#ff4d00] hover:text-white hover:border-[#ff4d00] shadow-sm transition-all disabled:opacity-30`}
           >
             <i className="fas fa-arrow-left text-xs md:text-base"></i>
           </button>
           <button 
             onClick={nextSlide}
             disabled={currentIndex === slides.length - 1}
-            className={`w-8 h-8 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-zinc-900/80 border border-zinc-800 text-white hover:bg-[#ff4d00] transition-all disabled:opacity-30`}
+            className={`w-8 h-8 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/90 border border-zinc-200 text-zinc-900 hover:bg-[#ff4d00] hover:text-white hover:border-[#ff4d00] shadow-sm transition-all disabled:opacity-30`}
           >
             <i className="fas fa-arrow-right text-xs md:text-base"></i>
           </button>
@@ -96,21 +96,21 @@ const App: React.FC = () => {
         <div className="flex gap-1 md:gap-3 pointer-events-auto items-center">
           <button 
             onClick={() => setShowNotes(!showNotes)}
-            className={`w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-md bg-zinc-900/80 border border-zinc-800 text-zinc-400 hover:text-white transition-all ${showNotes ? 'text-[#ff4d00] border-[#ff4d00]/50' : ''}`}
+            className={`w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-md bg-white/90 border border-zinc-200 text-zinc-500 hover:text-zinc-900 transition-all ${showNotes ? 'text-[#ff4d00] border-[#ff4d00]/50' : ''}`}
           >
             <i className="fas fa-sticky-note text-xs"></i>
           </button>
 
           <button 
             onClick={toggleFullscreen}
-            className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-md bg-zinc-900/80 border border-zinc-800 text-zinc-400 hover:text-white transition-all hidden sm:flex"
+            className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-md bg-white/90 border border-zinc-200 text-zinc-500 hover:text-zinc-900 transition-all hidden sm:flex"
           >
             <i className={`fas ${isFullscreen ? 'fa-compress' : 'fa-expand'} text-xs`}></i>
           </button>
         </div>
       </div>
 
-      <div className="absolute top-2 md:top-6 right-2 md:right-8 text-zinc-600 font-bold text-[8px] md:text-xs tracking-widest pointer-events-none">
+      <div className="absolute top-2 md:top-6 right-2 md:right-8 text-zinc-300 font-bold text-[8px] md:text-xs tracking-widest pointer-events-none">
         {currentIndex + 1} / {slides.length}
       </div>
 
