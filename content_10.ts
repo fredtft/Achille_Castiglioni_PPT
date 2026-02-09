@@ -6,7 +6,7 @@ export const slide10: Slide = {
   type: SlideType.CONTENT_SPLIT,
   title: 'SAN LUCA',
   content: 'Rivoluzione ergonomica. La poltrona scomposta per avvolgere il corpo umano in modo scientifico ed elegante.',
-  images: ['img/10_san_luca.jpg'],
+  images: ['img/san_luca_00.jpg'],
   list: [
     'Progetto: Achille e Pier Giacomo Castiglioni, 1960.',
     'Produzione: Gavina (1960), oggi Poltrona Frau.',

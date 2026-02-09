@@ -6,7 +6,7 @@ export const slide06: Slide = {
   type: SlideType.CONTENT_SPLIT,
   title: 'MEZZADRO',
   content: 'Sgabello che incarna il manifesto del Ready Made. Un sedile di un trattore degli anni \'50 entra nel salotto borghese.',
-  images: ['img/06_mezzadro.jpg'],
+  images: ['img/mezzadro_00.jpg'],
   list: [
     'Progetto: Achille e Pier Giacomo Castiglioni, 1957.',
     'Produzione: Zanotta (produzione di serie dal 1971).',

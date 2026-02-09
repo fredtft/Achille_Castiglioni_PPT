@@ -6,7 +6,7 @@ export const slide01: Slide = {
   type: SlideType.TITLE,
   title: 'Achille Castiglioni',
   subtitle: 'Maestro del Design Italiano (1918-2002)',
-  images: ['img/01_achille_castiglioni.jpg'],
+  images: ['img/achille_00.jpg'],
   metadata: {
     university: 'Università RUFA Milano',
     course: 'Corso: Storia del Design',

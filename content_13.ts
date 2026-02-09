@@ -6,9 +6,9 @@ export const slide13: Slide = {
   type: SlideType.DETAILS,
   title: 'TOIO: Componenti',
   images: [
-    'img/13_lampada_toio.jpg',
-    'img/13_lampada_toio_1.jpg',
-    'img/13_lampada_toio_2.jpg'
+    'img/toio_00.jpg',
+    'img/toio_01.jpg',
+    'img/toio_02.jpg'
   ],
   list: [
     'La Sorgente: Faro d\'automobile (press-lamp) da 300W che emette una luce indiretta potente e suggestiva.',

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Slide, SlideType } from '../types';
 
@@ -7,10 +8,25 @@ interface SlideRendererProps {
 
 export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
   
+  const getSlug = (slide: Slide): string => {
+    if (slide.id === '01') return 'achille';
+    if (slide.id === '04') return 'ironia';
+    if (slide.id === '05') return 'ready_made';
+    
+    // Estrae il nome principale del prodotto (es: "MEZZADRO" da "MEZZADRO: Dettagli")
+    const title = slide.title.split(':')[0].trim().toLowerCase();
+    if (title.includes('mezzadro')) return 'mezzadro';
+    if (title.includes('sella')) return 'sella';
+    if (title.includes('san luca')) return 'san_luca';
+    if (title.includes('toio')) return 'toio';
+    if (title.includes('arco')) return 'arco';
+    
+    return title.replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+  };
+
   const handleImageAction = (index: number) => {
-    // Gestione speciale per i titoli con virgolette o nomi file storici
-    const titleBase = slide.id === '04' ? 'ironia' : slide.id === '05' ? 'ready_made' : slide.title.split(':')[0].trim().toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
-    const expectedFileName = index === 0 ? `${slide.id}_${titleBase}` : `${slide.id}_${titleBase}_${index}`;
+    const slug = getSlug(slide);
+    const expectedFileName = `${slug}_${index.toString().padStart(2, '0')}`;
     
     navigator.clipboard.writeText(expectedFileName).then(() => {
       console.log(`Copied to clipboard: ${expectedFileName}`);
@@ -21,12 +37,8 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
   };
 
   const Placeholder = ({ index, className = "", fit = "cover" }: { index: number; className?: string; fit?: "cover" | "contain" }) => {
-    // Mappatura manuale per garantire che le immagini rimangano corrette dopo lo swap
-    let fileNamePart = slide.title.split(':')[0].trim().toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
-    if (slide.id === '04') fileNamePart = 'ironia';
-    if (slide.id === '05') fileNamePart = 'ready_made';
-    
-    const expectedFileName = index === 0 ? `${slide.id}_${fileNamePart}` : `${slide.id}_${fileNamePart}_${index}`;
+    const slug = getSlug(slide);
+    const expectedFileName = `${slug}_${index.toString().padStart(2, '0')}`;
     const src = `img/${expectedFileName}.jpg`;
 
     return (
@@ -89,25 +101,25 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
 
     case SlideType.TIMELINE:
       return (
-        <div className="flex flex-col h-full bg-black p-12 lg:p-24 overflow-hidden justify-start pt-20 lg:pt-32 relative">
-           <div className="mb-12 lg:mb-20 animate-slide-up">
+        <div className="flex flex-col h-full bg-black p-12 lg:p-24 overflow-hidden justify-start pt-8 lg:pt-12 relative">
+           <div className="mb-8 lg:mb-12 animate-slide-up">
             <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none">{slide.title}</h2>
             <div className="text-[#ff4d00] font-bold text-lg uppercase tracking-[0.5em] mt-2">{slide.subtitle}</div>
           </div>
           
-          <div className="relative w-full py-20">
+          <div className="relative w-full py-24 flex-1 flex items-center">
             <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-zinc-900 -translate-y-1/2"></div>
-            <div className="flex justify-between relative">
+            <div className="flex justify-between relative w-full">
               {slide.list?.map((item, i) => {
                 const [year, desc] = item.split(': ');
                 const isEven = i % 2 === 0;
                 return (
                   <div key={i} className={`flex flex-col items-center w-full relative group`}>
                     <div className="w-5 h-5 rounded-full bg-[#ff4d00] mb-0 border-4 border-black z-10 transition-transform group-hover:scale-150"></div>
-                    <div className={`absolute left-1/2 -translate-x-1/2 w-px h-20 bg-zinc-900 ${isEven ? 'bottom-full mb-0' : 'top-full mt-0'}`}></div>
+                    <div className={`absolute left-1/2 -translate-x-1/2 w-px h-16 lg:h-24 bg-zinc-800 ${isEven ? 'bottom-full mb-0' : 'top-full mt-0'}`}></div>
                     <div className={`absolute left-1/2 -translate-x-1/2 w-48 text-center ${isEven ? 'bottom-[calc(100%+80px)]' : 'top-[calc(100%+80px)]'}`}>
-                      <div className="text-[#ff4d00] font-black text-2xl mb-1">{year}</div>
-                      <div className="text-zinc-500 text-xs leading-relaxed font-medium px-2">{desc}</div>
+                      <div className="text-[#ff4d00] font-black text-xl lg:text-2xl mb-1">{year}</div>
+                      <div className="text-zinc-500 text-[10px] lg:text-xs leading-relaxed font-medium px-2">{desc}</div>
                     </div>
                   </div>
                 );
@@ -123,7 +135,7 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
       return (
         <div className="flex h-full w-full bg-black overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full">
-            <div className={`${isCompact ? 'p-8 lg:p-14' : 'p-12 lg:p-24'} flex flex-col justify-center ${isCompact ? 'space-y-4' : 'space-y-10'} ${isImageLeft ? 'order-2 md:order-2' : 'order-2 md:order-1'}`}>
+            <div className={`${isCompact ? 'px-8 lg:px-14 pt-8 lg:pt-12 pb-14' : 'p-12 lg:p-24'} flex flex-col justify-start ${isCompact ? 'space-y-4' : 'space-y-10'} ${isImageLeft ? 'order-2 md:order-2' : 'order-2 md:order-1'}`}>
               <h2 className={`${isCompact ? 'text-4xl md:text-5xl' : 'text-5xl md:text-7xl'} font-black text-[#ff4d00] tracking-tighter leading-none`}>{slide.title}</h2>
               <div className={isCompact ? 'space-y-4' : 'space-y-8'}>
                 <p className={`${isCompact ? 'text-lg lg:text-xl' : 'text-2xl lg:text-3xl'} text-zinc-100 font-light leading-snug border-l-4 border-[#ff4d00] pl-6`}>{slide.content}</p>
@@ -180,7 +192,7 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
 
       return (
         <div className="flex flex-col h-full bg-zinc-950 overflow-hidden">
-          <div className={`flex-1 ${isCompact ? 'p-8 lg:p-12' : 'p-12 lg:p-20'} overflow-y-auto`}>
+          <div className={`flex-1 ${isCompact ? 'px-8 lg:px-12 pt-8 lg:pt-12' : 'p-12 lg:p-20'} overflow-y-auto`}>
              <div className={`flex items-center gap-10 ${isCompact ? 'mb-8' : 'mb-16'}`}>
                <h2 className={`${isCompact ? 'text-3xl md:text-5xl' : 'text-4xl md:text-6xl'} font-black text-white uppercase tracking-tight`}>{mainTitle}</h2>
                <div className="h-[2px] flex-1 bg-zinc-900"></div>

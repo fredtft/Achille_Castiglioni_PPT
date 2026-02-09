@@ -7,7 +7,7 @@ export const slide05: Slide = {
   imagePosition: 'left',
   title: 'Il "Ready Made"',
   content: 'Castiglioni non inventava forme da zero, spesso "trovava" oggetti esistenti e li rifunzionalizzava. Il design come atto di osservazione del quotidiano.',
-  images: ['img/04_ready_made.jpg'],
+  images: ['img/ready_made_00.jpg'],
   list: [
     'De-contestualizzazione: Spostare un oggetto dal suo ambito d\'origine.',
     'Minimo sforzo: Utilizzare componenti già ottimizzati dall\'industria.',

@@ -6,9 +6,9 @@ export const slide09: Slide = {
   type: SlideType.DETAILS,
   title: 'SEDILE SELLA: Dettagli',
   images: [
-    'img/09_sedile_sella.jpg',
-    'img/09_sedile_sella_1.jpg',
-    'img/09_sedile_sella_2.jpg'
+    'img/sella_00.jpg',
+    'img/sella_01.jpg',
+    'img/sella_02.jpg'
   ],
   list: [
     'Equilibrio: La base semisferica in ghisa pesante permette un\'oscillazione continua ma impedisce la caduta.',

@@ -6,9 +6,9 @@ export const slide11: Slide = {
   type: SlideType.DETAILS,
   title: 'SAN LUCA: Struttura',
   images: [
-    'img/11_san_luca.jpg',
-    'img/11_san_luca_1.jpg',
-    'img/11_san_luca_2.jpg'
+    'img/san_luca_00.jpg',
+    'img/san_luca_01.jpg',
+    'img/san_luca_02.jpg'
   ],
   list: [
     'Scomposizione: Sedile, schienale e poggiatesta sono elementi separati, montati su una struttura rigida.',

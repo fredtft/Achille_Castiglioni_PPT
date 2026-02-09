@@ -6,7 +6,7 @@ export const slide12: Slide = {
   type: SlideType.CONTENT_SPLIT,
   title: 'LAMPADA TOIO',
   content: 'L\'ironia dell\'assemblaggio industriale. Un faro d\'automobile montato su uno stelo da pesca telescopico.',
-  images: ['img/12_lampada_toio.jpg'],
+  images: ['img/toio_00.jpg'],
   list: [
     'Progetto: A. e P.G. Castiglioni, 1962.',
     'Produzione: Flos.',

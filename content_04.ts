@@ -7,7 +7,7 @@ export const slide04: Slide = {
   imagePosition: 'left',
   title: 'Ironia & Funzione',
   content: 'Design serio, ma non serioso. L\'ironia serve a sdrammatizzare l\'oggetto e a renderlo più umano e comunicativo.',
-  images: ['img/05_ironia.jpg'],
+  images: ['img/ironia_00.jpg'],
   list: [
     'Componente ludica: Il progetto deve regalare un sorriso.',
     'Rigore funzionale: L\'ironia non deve mai compromettere l\'uso.',

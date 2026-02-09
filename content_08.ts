@@ -6,7 +6,7 @@ export const slide08: Slide = {
   type: SlideType.CONTENT_SPLIT,
   title: 'SEDILE SELLA',
   content: 'Il concetto di "sedersi in piedi". Un oggetto dinamico nato per le brevi soste al telefono a muro degli anni \'50.',
-  images: ['img/08_sedile_sella.jpg'],
+  images: ['img/sella_00.jpg'],
   list: [
     'Progetto: Achille e Pier Giacomo Castiglioni, 1957.',
     'Produzione: Zanotta (serie dal 1983).',
