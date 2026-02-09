@@ -36,7 +36,7 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
     window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}&tbm=isch`, '_blank');
   };
 
-  const Placeholder = ({ index, className = "", fit = "cover" }: { index: number; className?: string; fit?: "cover" | "contain" }) => {
+  const Placeholder = ({ index, className = "", fit = "cover", isDetail = false }: { index: number; className?: string; fit?: "cover" | "contain", isDetail?: boolean }) => {
     const slug = getSlug(slide);
     const expectedFileName = `${slug}_${index.toString().padStart(2, '0')}`;
     const src = `img/${expectedFileName}.jpg`;
@@ -44,12 +44,12 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
     return (
       <div 
         onClick={() => handleImageAction(index)}
-        className={`relative group cursor-pointer overflow-hidden bg-zinc-900 flex items-center justify-center border border-zinc-800 ${className}`}
+        className={`relative group cursor-pointer overflow-hidden ${isDetail ? 'bg-black' : 'bg-zinc-900'} flex items-center justify-center border border-zinc-800/30 ${className}`}
       >
         <img 
           src={src} 
           alt={slide.title} 
-          className={`w-full h-full ${fit === 'cover' ? 'object-cover' : 'object-contain p-4'} transition-transform duration-700 group-hover:scale-105`}
+          className={`w-full h-full ${fit === 'cover' ? 'object-cover' : 'object-contain'} transition-transform duration-700 group-hover:scale-105`}
           onError={(e) => {
             (e.target as HTMLImageElement).src = `https://placehold.co/1200x800/18181b/ff4d00?text=${expectedFileName}.jpg`;
           }}
@@ -194,34 +194,34 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
 
       return (
         <div className="flex flex-col h-full bg-zinc-950 overflow-hidden">
-          <div className={`flex-1 ${isCompact ? 'px-8 lg:px-12 pt-8 lg:pt-12' : 'p-12 lg:p-20'} overflow-y-auto`}>
-             <div className={`flex items-center gap-10 ${isCompact ? 'mb-8' : 'mb-16'}`}>
+          <div className={`flex-1 ${isCompact ? 'px-8 lg:px-12 pt-8 lg:pt-10' : 'p-12 lg:p-20'} overflow-y-auto`}>
+             <div className={`flex items-center gap-10 ${isCompact ? 'mb-6' : 'mb-12'}`}>
                <h2 className={`${isCompact ? 'text-3xl md:text-5xl' : 'text-4xl md:text-6xl'} font-black text-white uppercase tracking-tight`}>{mainTitle}</h2>
                <div className="h-[2px] flex-1 bg-zinc-900"></div>
                <div className="text-[#ff4d00] font-bold tracking-widest uppercase text-[10px] md:text-xs">
                  {detailType}
                </div>
             </div>
-            <div className={`grid grid-cols-1 md:grid-cols-2 ${isCompact ? 'gap-6' : 'gap-10'}`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 ${isCompact ? 'gap-4 lg:gap-6' : 'gap-8 lg:gap-10'}`}>
               {slide.list?.map((item, i) => {
                 const [label, val] = item.split(': ');
                 return (
-                  <div key={i} className={`${isCompact ? 'p-6' : 'p-8'} bg-black/40 border border-zinc-900 transition-all hover:bg-zinc-900/50 shadow-sm`}>
+                  <div key={i} className={`${isCompact ? 'p-5 lg:p-6' : 'p-8'} bg-black/40 border border-zinc-900/50 transition-all hover:bg-zinc-900/50 shadow-sm`}>
                     <div className={`text-[#ff4d00] font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] ${isCompact ? 'mb-2' : 'mb-4'} flex items-center gap-3`}>
-                      <span className="w-2 h-2 bg-[#ff4d00] rounded-full"></span>
+                      <span className="w-1.5 h-1.5 bg-[#ff4d00] rounded-full"></span>
                       {label}
                     </div>
-                    <div className={`text-zinc-300 ${isCompact ? 'text-lg' : 'text-xl'} font-light leading-relaxed`}>{val}</div>
+                    <div className={`text-zinc-300 ${isCompact ? 'text-base lg:text-lg' : 'text-xl'} font-light leading-relaxed`}>{val}</div>
                   </div>
                 );
               })}
             </div>
           </div>
-          {/* Griglia immagini: ora usa indici 01, 02, 03 per evitare duplicati della slide precedente */}
-          <div className="h-1/3 grid grid-cols-3 gap-0 bg-black border-t-2 border-[#ff4d00]/20">
-            <Placeholder index={1} fit="contain" className="bg-black border-r border-zinc-900" />
-            <Placeholder index={2} fit="contain" className="bg-black border-r border-zinc-900" />
-            <Placeholder index={3} fit="contain" className="bg-black" />
+          {/* Griglia immagini: Altezza aumentata al 40% e rimosso padding interno */}
+          <div className="h-[40%] grid grid-cols-3 gap-0 bg-black border-t-2 border-[#ff4d00]/20">
+            <Placeholder index={1} fit="contain" isDetail={true} className="bg-black border-r border-zinc-900/50" />
+            <Placeholder index={2} fit="contain" isDetail={true} className="bg-black border-r border-zinc-900/50" />
+            <Placeholder index={3} fit="contain" isDetail={true} className="bg-black" />
           </div>
         </div>
       );
