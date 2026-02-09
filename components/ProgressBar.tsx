@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface ProgressBarProps {
@@ -10,9 +9,9 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ current, total }) => {
   const progress = ((current + 1) / total) * 100;
 
   return (
-    <div className="fixed top-0 left-0 w-full h-1.5 bg-zinc-100 z-50">
+    <div className="fixed top-0 left-0 w-full h-1.5 bg-zinc-900 z-50">
       <div 
-        className="h-full bg-[#ff4d00] transition-all duration-300 ease-out shadow-[0_0_10px_#ff4d00]"
+        className="h-full bg-[#ff4d00] transition-all duration-300 ease-out shadow-[0_0_15px_rgba(255,77,0,0.6)]"
         style={{ width: `${progress}%` }}
       />
     </div>
