@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Slide, SlideType } from '../types';
 
@@ -88,8 +89,12 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide, isPrint = f
                 <div className={`text-zinc-400 ${isPrint ? 'text-sm' : 'text-sm lg:text-lg'}`}>{slide.metadata?.student}</div>
               </div>
             </div>
-            <div className="flex justify-center md:justify-end h-full items-center">
-              <Placeholder index={0} fit="contain" className={`rounded-sm shadow-2xl ${isPrint ? 'max-h-[140mm] max-w-[120mm]' : 'max-w-[450px] aspect-[4/5]'}`} />
+            <div className="flex justify-center md:justify-end h-full items-center overflow-hidden py-4 md:py-0">
+              <Placeholder 
+                index={0} 
+                fit="contain" 
+                className={`rounded-sm shadow-2xl h-full w-auto max-h-full ${isPrint ? 'max-h-[160mm] max-w-[120mm]' : ''}`} 
+              />
             </div>
           </div>
         </div>
