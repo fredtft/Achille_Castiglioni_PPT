@@ -9,7 +9,7 @@ export const slide20: Slide = {
   content: 'Un sedile che sembra atterrato da un altro mondo. Allunaggio unisce la sperimentazione spaziale degli anni \'60 con la funzionalità pratica del design per esterni.',
   images: ['img/allunaggio_00.jpg'],
   list: [
-    'Progetto: A. e P.G. Castiglioni, 1965.',
+    'Progetto: Achille e Pier Giacomo Castiglioni, 1965.',
     'Produzione: Zanotta (dal 1980).',
     'Concept: Ridurre al minimo l\'impronta sul terreno, come un modulo lunare.'
   ],

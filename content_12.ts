@@ -8,7 +8,7 @@ export const slide12: Slide = {
   content: 'L\'ironia dell\'assemblaggio industriale. Un faro d\'automobile montato su uno stelo da pesca telescopico.',
   images: ['img/toio_00.jpg'],
   list: [
-    'Progetto: A. e P.G. Castiglioni, 1962.',
+    'Progetto: Achille e Pier Giacomo Castiglioni, 1962.',
     'Produzione: Flos.',
     'Significato: "Toio" è la storpiatura dialettale del termine inglese "Toy".'
   ],

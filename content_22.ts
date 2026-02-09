@@ -9,7 +9,7 @@ export const slide22: Slide = {
   content: 'Un\'icona del design antropomorfo. Il "sorriso" di Brionvega che ha trasformato l\'elettronica in un mobile domestico vivo e mobile.',
   images: ['img/rr126_00.jpg'],
   list: [
-    'Progetto: A. e P.G. Castiglioni, 1965.',
+    'Progetto: Achille e Pier Giacomo Castiglioni, 1965.',
     'Produttore: Brionvega.',
     'Concept: Apparecchiatura stereofonica ad alta fedeltà con personalità.'
   ],

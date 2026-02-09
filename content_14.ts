@@ -8,7 +8,7 @@ export const slide14: Slide = {
   content: 'La prima lampada ad arco della storia. Un "lampadario a terra" che illumina il centro della tavola senza vincoli al soffitto.',
   images: ['img/arco_00.jpg'],
   list: [
-    'Progetto: A. e P.G. Castiglioni, 1962.',
+    'Progetto: Achille e Pier Giacomo Castiglioni, 1962.',
     'Produzione: Flos.',
     'Status: L\'oggetto di design italiano più celebre al mondo.'
   ],

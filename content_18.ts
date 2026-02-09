@@ -9,7 +9,7 @@ export const slide18: Slide = {
   content: 'Uno strumento progettato per risolvere un fastidio quotidiano: il residuo inaccessibile nei barattoli.',
   images: ['img/sleek_00.jpg'],
   list: [
-    'Progetto: A. e P.G. Castiglioni, 1962.',
+    'Progetto: Achille e Pier Giacomo Castiglioni, 1962.',
     'Produzione: Kraft (1962), Alessi (1996).',
     'Materiale: Polimetilmetacrilato (PMMA).'
   ],
