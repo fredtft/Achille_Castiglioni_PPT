@@ -4,16 +4,16 @@ import { Slide, SlideType } from '../types';
 
 interface SlideRendererProps {
   slide: Slide;
+  isPrint?: boolean;
 }
 
-export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
+export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide, isPrint = false }) => {
   
   const getSlug = (slide: Slide): string => {
     if (slide.id === '01') return 'achille';
     if (slide.id === '04') return 'ironia';
     if (slide.id === '05') return 'ready_made';
     
-    // Estrae il nome principale del prodotto (es: "MEZZADRO" da "MEZZADRO: Dettagli")
     const title = slide.title.split(':')[0].trim().toLowerCase();
     if (title.includes('mezzadro')) return 'mezzadro';
     if (title.includes('sella')) return 'sella';
@@ -30,6 +30,7 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
   };
 
   const handleImageAction = (index: number) => {
+    if (isPrint) return;
     const slug = getSlug(slide);
     const expectedFileName = `${slug}_${index.toString().padStart(2, '0')}`;
     
@@ -49,44 +50,47 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
     return (
       <div 
         onClick={() => handleImageAction(index)}
-        className={`relative group cursor-pointer overflow-hidden ${isDetail ? 'bg-black' : 'bg-zinc-900'} flex items-center justify-center border border-zinc-800/30 ${className}`}
+        className={`relative group ${isPrint ? '' : 'cursor-pointer'} overflow-hidden ${isDetail ? 'bg-black' : 'bg-zinc-900'} flex items-center justify-center border border-zinc-800/30 ${className}`}
       >
         <img 
           src={src} 
           alt={slide.title} 
-          className={`w-full h-full ${fit === 'cover' ? 'object-cover' : 'object-contain'} transition-transform duration-700 group-hover:scale-105`}
+          className={`w-full h-full ${fit === 'cover' ? 'object-cover' : 'object-contain'} transition-transform duration-700 ${!isPrint ? 'group-hover:scale-105' : ''}`}
           onError={(e) => {
             (e.target as HTMLImageElement).src = `https://placehold.co/1200x800/18181b/ff4d00?text=${expectedFileName}.jpg`;
           }}
         />
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
-           <div className="bg-[#ff4d00] text-white text-[10px] font-black uppercase px-3 py-1 tracking-tighter rounded-sm shadow-xl">
-             Copia & Cerca
-           </div>
-        </div>
+        {!isPrint && (
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
+             <div className="bg-[#ff4d00] text-white text-[10px] font-black uppercase px-3 py-1 tracking-tighter rounded-sm shadow-xl">
+               Copia & Cerca
+             </div>
+          </div>
+        )}
       </div>
     );
   };
 
-  const isCompact = parseInt(slide.id) >= 4;
+  const isCompactLayout = parseInt(slide.id) >= 4;
+  const printClass = isPrint ? "print-mode" : "";
 
   switch (slide.type) {
     case SlideType.TITLE:
       return (
-        <div className="flex h-full items-center p-8 lg:px-20 lg:py-12 bg-black overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center w-full max-w-7xl mx-auto">
-            <div className="space-y-6 lg:space-y-8 animate-slide-up">
+        <div className={`flex h-full items-center p-8 lg:px-20 lg:py-12 bg-black overflow-hidden ${printClass}`}>
+          <div className={`grid grid-cols-1 md:grid-cols-2 ${isPrint ? 'gap-8' : 'gap-10 lg:gap-16'} items-center w-full max-w-7xl mx-auto`}>
+            <div className={`space-y-6 ${isPrint ? '' : 'lg:space-y-8 animate-slide-up'}`}>
               <div className="h-1.5 w-24 bg-[#ff4d00]"></div>
-              <div className="text-[#ff4d00] font-bold text-sm lg:text-lg tracking-[0.3em] uppercase">{slide.metadata?.university}</div>
-              <h1 className="text-5xl md:text-6xl lg:text-8xl font-black leading-[0.9] text-white tracking-tighter">{slide.title}</h1>
-              <p className="text-xl md:text-2xl lg:text-3xl text-zinc-400 font-serif italic leading-tight">{slide.subtitle}</p>
-              <div className="pt-8 lg:pt-12 space-y-2 lg:space-y-3 border-l-2 border-zinc-800 pl-6 lg:pl-8">
-                <div className="text-zinc-500 text-xs lg:text-base uppercase tracking-widest font-bold">{slide.metadata?.course}</div>
-                <div className="text-zinc-400 text-sm lg:text-lg">{slide.metadata?.student}</div>
+              <div className={`text-[#ff4d00] font-bold tracking-[0.3em] uppercase ${isPrint ? 'text-xs' : 'text-sm lg:text-lg'}`}>{slide.metadata?.university}</div>
+              <h1 className={`font-black leading-[0.9] text-white tracking-tighter ${isPrint ? 'text-5xl' : 'text-5xl md:text-6xl lg:text-8xl'}`}>{slide.title}</h1>
+              <p className={`text-zinc-400 font-serif italic leading-tight ${isPrint ? 'text-lg' : 'text-xl md:text-2xl lg:text-3xl'}`}>{slide.subtitle}</p>
+              <div className={`border-l-2 border-zinc-800 pl-6 ${isPrint ? 'pt-4 space-y-1' : 'pt-8 lg:pt-12 space-y-2 lg:space-y-3 lg:pl-8'}`}>
+                <div className={`text-zinc-500 uppercase tracking-widest font-bold ${isPrint ? 'text-[10px]' : 'text-xs lg:text-base'}`}>{slide.metadata?.course}</div>
+                <div className={`text-zinc-400 ${isPrint ? 'text-xs' : 'text-sm lg:text-lg'}`}>{slide.metadata?.student}</div>
               </div>
             </div>
             <div className="flex justify-center md:justify-end">
-              <Placeholder index={0} fit="cover" className="aspect-[4/5] w-full max-w-[450px] rounded-sm shadow-2xl" />
+              <Placeholder index={0} fit="cover" className={`aspect-[4/5] w-full rounded-sm shadow-2xl ${isPrint ? 'max-w-[300px]' : 'max-w-[450px]'}`} />
             </div>
           </div>
         </div>
@@ -94,13 +98,13 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
 
     case SlideType.QUOTE:
       return (
-        <div className="flex flex-col h-full items-center justify-center p-12 lg:p-40 text-center relative bg-zinc-950">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[25rem] md:text-[40rem] text-[#ff4d00]/5 font-serif select-none pointer-events-none">“</div>
-          <div className="relative z-10 max-w-6xl space-y-16 animate-slide-up">
-            <blockquote className="text-2xl md:text-4xl lg:text-6xl font-serif italic leading-snug text-zinc-100">{slide.quote}</blockquote>
+        <div className={`flex flex-col h-full items-center justify-center text-center relative bg-zinc-950 ${isPrint ? 'p-16' : 'p-12 lg:p-40'} ${printClass}`}>
+          <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#ff4d00]/5 font-serif select-none pointer-events-none ${isPrint ? 'text-[20rem]' : 'text-[25rem] md:text-[40rem]'}`}>“</div>
+          <div className={`relative z-10 max-w-6xl animate-slide-up ${isPrint ? 'space-y-8' : 'space-y-16'}`}>
+            <blockquote className={`font-serif italic leading-snug text-zinc-100 ${isPrint ? 'text-2xl md:text-3xl' : 'text-2xl md:text-4xl lg:text-6xl'}`}>{slide.quote}</blockquote>
             <div className="flex items-center justify-center gap-6">
               <div className="w-16 h-[3px] bg-[#ff4d00]"></div>
-              <div className="text-xl md:text-2xl lg:text-3xl font-black text-[#ff4d00] tracking-tight uppercase">{slide.author}</div>
+              <div className={`font-black text-[#ff4d00] tracking-tight uppercase ${isPrint ? 'text-lg' : 'text-xl md:text-2xl lg:text-3xl'}`}>{slide.author}</div>
             </div>
           </div>
         </div>
@@ -108,10 +112,10 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
 
     case SlideType.TIMELINE:
       return (
-        <div className="flex flex-col h-full bg-black p-12 lg:p-24 overflow-hidden justify-start pt-8 lg:pt-12 relative">
-           <div className="mb-8 lg:mb-12 animate-slide-up">
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none">{slide.title}</h2>
-            <div className="text-[#ff4d00] font-bold text-lg uppercase tracking-[0.5em] mt-2">{slide.subtitle}</div>
+        <div className={`flex flex-col h-full bg-black overflow-hidden justify-start relative ${isPrint ? 'p-12 pt-6' : 'p-12 lg:p-24 pt-8 lg:pt-12'} ${printClass}`}>
+           <div className={`animate-slide-up ${isPrint ? 'mb-4' : 'mb-8 lg:mb-12'}`}>
+            <h2 className={`font-black text-white uppercase tracking-tighter leading-none ${isPrint ? 'text-4xl' : 'text-5xl md:text-7xl lg:text-8xl'}`}>{slide.title}</h2>
+            <div className={`text-[#ff4d00] font-bold uppercase tracking-[0.5em] mt-2 ${isPrint ? 'text-sm' : 'text-lg'}`}>{slide.subtitle}</div>
           </div>
           
           <div className="relative w-full py-24 flex-1 flex items-center">
@@ -122,11 +126,11 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
                 const isEven = i % 2 === 0;
                 return (
                   <div key={i} className={`flex flex-col items-center w-full relative group`}>
-                    <div className="w-5 h-5 rounded-full bg-[#ff4d00] mb-0 border-4 border-black z-10 transition-transform group-hover:scale-150"></div>
-                    <div className={`absolute left-1/2 -translate-x-1/2 w-px h-16 lg:h-24 bg-zinc-800 ${isEven ? 'bottom-full mb-0' : 'top-full mt-0'}`}></div>
+                    <div className="w-5 h-5 rounded-full bg-[#ff4d00] mb-0 border-4 border-black z-10"></div>
+                    <div className={`absolute left-1/2 -translate-x-1/2 w-px bg-zinc-800 ${isEven ? 'bottom-full mb-0 h-16' : 'top-full mt-0 h-16'}`}></div>
                     <div className={`absolute left-1/2 -translate-x-1/2 w-48 text-center ${isEven ? 'bottom-[calc(100%+80px)]' : 'top-[calc(100%+80px)]'}`}>
-                      <div className="text-[#ff4d00] font-black text-xl lg:text-2xl mb-1">{year}</div>
-                      <div className="text-zinc-500 text-[10px] lg:text-xs leading-relaxed font-medium px-2">{desc}</div>
+                      <div className="text-[#ff4d00] font-black text-xl mb-1">{year}</div>
+                      <div className="text-zinc-500 text-[10px] leading-relaxed font-medium px-2">{desc}</div>
                     </div>
                   </div>
                 );
@@ -138,21 +142,20 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
 
     case SlideType.CONTENT_SPLIT:
       const isImageLeft = slide.imagePosition === 'left';
-      
       return (
-        <div className="flex h-full w-full bg-black overflow-hidden">
+        <div className={`flex h-full w-full bg-black overflow-hidden ${printClass}`}>
           <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full">
-            <div className={`${isCompact ? 'px-8 lg:px-14 pt-8 lg:pt-12 pb-14' : 'p-12 lg:p-24'} flex flex-col justify-start ${isCompact ? 'space-y-4' : 'space-y-10'} ${isImageLeft ? 'order-2 md:order-2' : 'order-2 md:order-1'}`}>
-              <h2 className={`${isCompact ? 'text-4xl md:text-5xl' : 'text-5xl md:text-7xl'} font-black text-[#ff4d00] tracking-tighter leading-none`}>{slide.title}</h2>
-              <div className={isCompact ? 'space-y-4' : 'space-y-8'}>
-                <p className={`${isCompact ? 'text-lg lg:text-xl' : 'text-2xl lg:text-3xl'} text-zinc-100 font-light leading-snug border-l-4 border-[#ff4d00] pl-6`}>{slide.content}</p>
-                <div className={`grid grid-cols-1 ${isCompact ? 'gap-3 pt-4' : 'gap-8 pt-10'} border-t border-zinc-900`}>
+            <div className={`${(isCompactLayout || isPrint) ? 'px-8 pt-8 pb-10' : 'p-12 lg:p-24'} flex flex-col justify-start ${(isCompactLayout || isPrint) ? 'space-y-4' : 'space-y-10'} ${isImageLeft ? 'order-2 md:order-2' : 'order-2 md:order-1'}`}>
+              <h2 className={`${(isCompactLayout || isPrint) ? 'text-3xl md:text-4xl' : 'text-5xl md:text-7xl'} font-black text-[#ff4d00] tracking-tighter leading-none`}>{slide.title}</h2>
+              <div className={(isCompactLayout || isPrint) ? 'space-y-4' : 'space-y-8'}>
+                <p className={`${(isCompactLayout || isPrint) ? 'text-base lg:text-lg' : 'text-2xl lg:text-3xl'} text-zinc-100 font-light leading-snug border-l-4 border-[#ff4d00] pl-6`}>{slide.content}</p>
+                <div className={`grid grid-cols-1 ${(isCompactLayout || isPrint) ? 'gap-2 pt-4' : 'gap-8 pt-10'} border-t border-zinc-900`}>
                   {slide.list?.map((item, i) => {
                     const [label, val] = item.split(': ');
                     return (
                       <div key={i} className="group">
                         <div className="text-[#ff4d00]/80 font-bold text-[10px] uppercase tracking-[0.3em] mb-1">{label}</div>
-                        <div className={`${isCompact ? 'text-base lg:text-lg' : 'text-zinc-400 text-xl'} font-light`}>{val}</div>
+                        <div className={`${(isCompactLayout || isPrint) ? 'text-sm lg:text-base' : 'text-zinc-400 text-xl'} font-light`}>{val}</div>
                       </div>
                     );
                   })}
@@ -168,22 +171,21 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
 
     case SlideType.FEATURE:
       return (
-        <div className="relative h-full w-full bg-black overflow-hidden flex flex-col lg:flex-row">
-           <div className="w-full lg:w-3/5 h-[40vh] lg:h-full relative overflow-hidden">
+        <div className={`relative h-full w-full bg-black overflow-hidden flex flex-col lg:flex-row ${printClass}`}>
+           <div className={`w-full ${isPrint ? 'lg:w-1/2' : 'lg:w-3/5'} h-[40vh] lg:h-full relative overflow-hidden`}>
              <Placeholder index={0} fit="cover" className="w-full h-full border-none" />
              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-transparent hidden lg:block"></div>
-             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent lg:hidden"></div>
            </div>
            
-           <div className="w-full lg:w-2/5 p-8 lg:p-24 flex flex-col justify-center relative z-10 lg:-ml-32">
-              <div className="bg-zinc-950/80 backdrop-blur-md p-10 lg:p-16 border-l-8 border-[#ff4d00] shadow-2xl">
-                <h2 className="text-5xl lg:text-8xl font-black text-white uppercase tracking-tighter mb-8 leading-[0.85]">{slide.title}</h2>
-                <p className="text-xl lg:text-2xl text-zinc-300 font-light leading-relaxed mb-12">{slide.content}</p>
-                <div className="space-y-6">
+           <div className={`w-full ${isPrint ? 'lg:w-1/2 lg:-ml-16' : 'lg:w-2/5 lg:-ml-32'} p-8 lg:p-24 flex flex-col justify-center relative z-10`}>
+              <div className={`bg-zinc-950/80 backdrop-blur-md border-l-8 border-[#ff4d00] shadow-2xl ${isPrint ? 'p-8' : 'p-10 lg:p-16'}`}>
+                <h2 className={`font-black text-white uppercase tracking-tighter mb-8 leading-[0.85] ${isPrint ? 'text-4xl lg:text-5xl' : 'text-5xl lg:text-8xl'}`}>{slide.title}</h2>
+                <p className={`text-zinc-300 font-light leading-relaxed mb-8 ${isPrint ? 'text-lg' : 'text-xl lg:text-2xl'}`}>{slide.content}</p>
+                <div className="space-y-4">
                   {slide.list?.map((item, i) => (
                     <div key={i} className="flex gap-4 items-start">
                       <div className="w-2 h-2 rounded-full bg-[#ff4d00] mt-2 flex-shrink-0"></div>
-                      <div className="text-zinc-400 text-base lg:text-lg font-medium">{item}</div>
+                      <div className={`text-zinc-400 font-medium ${isPrint ? 'text-sm' : 'text-base lg:text-lg'}`}>{item}</div>
                     </div>
                   ))}
                 </div>
@@ -198,31 +200,31 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
         : [slide.title, 'Dettagli'];
 
       return (
-        <div className="flex flex-col h-full bg-zinc-950 overflow-hidden">
-          <div className={`flex-1 ${isCompact ? 'px-8 lg:px-12 pt-8 lg:pt-10' : 'p-12 lg:p-20'} overflow-y-auto`}>
-             <div className={`flex items-center gap-10 ${isCompact ? 'mb-6' : 'mb-12'}`}>
-               <h2 className={`${isCompact ? 'text-3xl md:text-5xl' : 'text-4xl md:text-6xl'} font-black text-white uppercase tracking-tight`}>{mainTitle}</h2>
+        <div className={`flex flex-col h-full bg-zinc-950 overflow-hidden ${printClass}`}>
+          <div className={`flex-1 overflow-y-auto ${(isCompactLayout || isPrint) ? 'px-8 pt-8 pb-4' : 'p-12 lg:p-20'}`}>
+             <div className={`flex items-center gap-10 ${(isCompactLayout || isPrint) ? 'mb-4' : 'mb-12'}`}>
+               <h2 className={`${(isCompactLayout || isPrint) ? 'text-2xl md:text-3xl' : 'text-4xl md:text-6xl'} font-black text-white uppercase tracking-tight`}>{mainTitle}</h2>
                <div className="h-[2px] flex-1 bg-zinc-900"></div>
-               <div className="text-[#ff4d00] font-bold tracking-widest uppercase text-[10px] md:text-xs">
+               <div className="text-[#ff4d00] font-bold tracking-widest uppercase text-[10px]">
                  {detailType}
                </div>
             </div>
-            <div className={`grid grid-cols-1 md:grid-cols-2 ${isCompact ? 'gap-4 lg:gap-6' : 'gap-8 lg:gap-10'}`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 ${(isCompactLayout || isPrint) ? 'gap-3' : 'gap-8 lg:gap-10'}`}>
               {slide.list?.map((item, i) => {
                 const [label, val] = item.split(': ');
                 return (
-                  <div key={i} className={`${isCompact ? 'p-5 lg:p-6' : 'p-8'} bg-black/40 border border-zinc-900/50 transition-all hover:bg-zinc-900/50 shadow-sm`}>
-                    <div className={`text-[#ff4d00] font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] ${isCompact ? 'mb-2' : 'mb-4'} flex items-center gap-3`}>
+                  <div key={i} className={`${(isCompactLayout || isPrint) ? 'p-4' : 'p-8'} bg-black/40 border border-zinc-900/50 shadow-sm`}>
+                    <div className={`text-[#ff4d00] font-bold text-[10px] uppercase tracking-[0.2em] mb-2 flex items-center gap-3`}>
                       <span className="w-1.5 h-1.5 bg-[#ff4d00] rounded-full"></span>
                       {label}
                     </div>
-                    <div className={`text-zinc-300 ${isCompact ? 'text-base lg:text-lg' : 'text-xl'} font-light leading-relaxed`}>{val}</div>
+                    <div className={`text-zinc-300 ${(isCompactLayout || isPrint) ? 'text-sm' : 'text-xl'} font-light leading-relaxed`}>{val}</div>
                   </div>
                 );
               })}
             </div>
           </div>
-          <div className="h-[40%] grid grid-cols-3 gap-0 bg-black border-t-2 border-[#ff4d00]/20">
+          <div className={`${isPrint ? 'h-[30%]' : 'h-[40%]'} grid grid-cols-3 gap-0 bg-black border-t-2 border-[#ff4d00]/20`}>
             <Placeholder index={1} fit="contain" isDetail={true} className="bg-black border-r border-zinc-900/50" />
             <Placeholder index={2} fit="contain" isDetail={true} className="bg-black border-r border-zinc-900/50" />
             <Placeholder index={3} fit="contain" isDetail={true} className="bg-black" />
