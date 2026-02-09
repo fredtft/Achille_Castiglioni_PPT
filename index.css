@@ -53,88 +53,82 @@ body {
 }
 
 /* 
-   PRINT ENGINE OPTIMIZATION 
-   Target: A4 Landscape, zero margins, no clipping
+   LOGICA DI STAMPA PDF - OTTIMIZZAZIONE A4 LANDSCAPE
 */
 @media print {
     @page {
         size: A4 landscape;
-        margin: 0;
+        margin: 0mm !important; /* Forza margini zero per il PDF */
     }
 
     * {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         box-sizing: border-box !important;
+        animation: none !important; /* Rimuove animazioni che possono bloccare il rendering */
+        transition: none !important;
     }
 
-    /* Force hierarchy to be visible and flowable */
-    html, body, #root, #root > div {
-        display: block !important;
-        overflow: visible !important;
-        height: auto !important;
-        width: 100% !important;
+    html, body, #root {
         background: black !important;
+        width: 297mm !important;
+        height: auto !important;
+        overflow: visible !important;
         margin: 0 !important;
         padding: 0 !important;
-        position: static !important;
     }
 
-    /* Hide UI components */
+    /* Nasconde tutto tranne il contenitore di stampa */
     .no-print, 
     #root > div > main,
     #root > div > .absolute,
-    .ProgressBar,
+    #root > div > .ProgressBar,
     .NotesModal {
         display: none !important;
         visibility: hidden !important;
-        height: 0 !important;
-        width: 0 !important;
     }
 
-    /* The Print Container holding all slides */
     .print-container {
         display: block !important;
-        width: 100% !important;
-        height: auto !important;
-        position: static !important;
-        visibility: visible !important;
+        width: 297mm !important;
         background: black !important;
+        position: static !important;
+        overflow: visible !important;
     }
 
-    /* Individual Slide Page */
+    /* Configurazione Pagina Singola */
     .print-slide-wrapper {
         display: block !important;
-        position: relative !important;
-        width: 297mm !important; /* Fixed A4 Width */
-        height: 210mm !important; /* Fixed A4 Height */
+        width: 297mm !important;
+        height: 210mm !important; /* Altezza fissa A4 Landscape */
         page-break-after: always !important;
         break-after: page !important;
+        page-break-inside: avoid !important;
+        position: relative !important;
         overflow: hidden !important;
         background: black !important;
         margin: 0 !important;
         padding: 0 !important;
     }
 
-    /* Internal layout fixes for Print */
+    /* Layout interno compresso per la stampa */
     .print-mode {
-        width: 100% !important;
-        height: 100% !important;
-        display: flex !important;
-        flex-direction: column !important;
+        width: 297mm !important;
+        height: 210mm !important;
+        overflow: hidden !important;
+        position: relative !important;
     }
 
-    /* Force images to stay within bounds */
-    .print-slide-wrapper img {
-        max-width: 100% !important;
+    .print-mode img {
         max-height: 100% !important;
-        object-fit: contain !important; /* Ensure image fits A4 without cropping */
+        object-fit: contain !important; /* Evita zoom eccessivi in stampa */
     }
 
-    /* Text Adjustments */
-    .print-slide-wrapper h1 { font-size: 3.5rem !important; }
-    .print-slide-wrapper h2 { font-size: 2.2rem !important; }
-    .print-slide-wrapper p { font-size: 1.1rem !important; }
+    /* Ridimensionamento Font per PDF */
+    .print-slide-wrapper h1 { font-size: 4rem !important; margin-bottom: 0.5rem !important; }
+    .print-slide-wrapper h2 { font-size: 2.5rem !important; margin-bottom: 0.5rem !important; }
+    .print-slide-wrapper p { font-size: 1.2rem !important; }
+    .print-slide-wrapper blockquote { font-size: 2rem !important; }
 }
 
 /* UI/Preview logic */
