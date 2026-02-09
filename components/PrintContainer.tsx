@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Slide } from '../types';
 import { SlideRenderer } from './SlideRenderer';
@@ -9,6 +8,8 @@ interface PrintContainerProps {
 }
 
 export const PrintContainer: React.FC<PrintContainerProps> = ({ slides, isPreview = false }) => {
+  // isPreview: layout per l'utente nel popup
+  // !isPreview: layout invisibile catturato dal browser per il PDF
   return (
     <div className={isPreview ? "flex flex-col gap-8 p-8" : "print-container"}>
       {slides.map((slide) => (
@@ -19,7 +20,7 @@ export const PrintContainer: React.FC<PrintContainerProps> = ({ slides, isPrevie
             : "print-slide-wrapper"
           }
         >
-          {/* Force isPrint={true} for both real print and preview to ensure they match and are compact */}
+          {/* isPrint={true} attiva il layout compatto definito in SlideRenderer */}
           <SlideRenderer slide={slide} isPrint={true} />
         </div>
       ))}
