@@ -6,9 +6,9 @@ export const slide07: Slide = {
   type: SlideType.DETAILS,
   title: 'MEZZADRO: Dettagli',
   images: [
-    'img/mezzadro_00.jpg',
     'img/mezzadro_01.jpg',
-    'img/mezzadro_02.jpg'
+    'img/mezzadro_02.jpg',
+    'img/mezzadro_03.jpg'
   ],
   list: [
     'La Balestra: In acciaio armonico, prelevata da un carro agricolo, garantisce un molleggio naturale.',

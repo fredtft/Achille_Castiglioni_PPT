@@ -6,9 +6,9 @@ export const slide15: Slide = {
   type: SlideType.DETAILS,
   title: 'ARCO: L\'Icona',
   images: [
-    'img/arco_00.jpg',
     'img/arco_01.jpg',
-    'img/arco_02.jpg'
+    'img/arco_02.jpg',
+    'img/arco_03.jpg'
   ],
   list: [
     'Il Marmo: 65kg di marmo di Carrara con angoli smussati per sicurezza e un foro per facilitare il trasporto (con un manico di scopa).',

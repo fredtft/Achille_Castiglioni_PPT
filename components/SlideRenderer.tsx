@@ -68,19 +68,21 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
   switch (slide.type) {
     case SlideType.TITLE:
       return (
-        <div className="flex h-full items-center p-8 lg:p-24 bg-black overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center w-full">
-            <div className="space-y-8 animate-slide-up">
+        <div className="flex h-full items-center p-8 lg:px-20 lg:py-12 bg-black overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center w-full max-w-7xl mx-auto">
+            <div className="space-y-6 lg:space-y-8 animate-slide-up">
               <div className="h-1.5 w-24 bg-[#ff4d00]"></div>
-              <div className="text-[#ff4d00] font-bold text-sm lg:text-xl tracking-[0.3em] uppercase">{slide.metadata?.university}</div>
-              <h1 className="text-5xl md:text-7xl lg:text-9xl font-black leading-none text-white tracking-tighter">{slide.title}</h1>
-              <p className="text-xl md:text-2xl lg:text-4xl text-zinc-400 font-serif italic">{slide.subtitle}</p>
-              <div className="pt-12 space-y-3 border-l-2 border-zinc-800 pl-8">
-                <div className="text-zinc-500 text-sm lg:text-lg uppercase tracking-widest font-bold">{slide.metadata?.course}</div>
+              <div className="text-[#ff4d00] font-bold text-sm lg:text-lg tracking-[0.3em] uppercase">{slide.metadata?.university}</div>
+              <h1 className="text-5xl md:text-6xl lg:text-8xl font-black leading-[0.9] text-white tracking-tighter">{slide.title}</h1>
+              <p className="text-xl md:text-2xl lg:text-3xl text-zinc-400 font-serif italic leading-tight">{slide.subtitle}</p>
+              <div className="pt-8 lg:pt-12 space-y-2 lg:space-y-3 border-l-2 border-zinc-800 pl-6 lg:pl-8">
+                <div className="text-zinc-500 text-xs lg:text-base uppercase tracking-widest font-bold">{slide.metadata?.course}</div>
                 <div className="text-zinc-400 text-sm lg:text-lg">{slide.metadata?.student}</div>
               </div>
             </div>
-            <Placeholder index={0} fit="cover" className="aspect-[4/5] rounded-sm shadow-2xl" />
+            <div className="flex justify-center md:justify-end">
+              <Placeholder index={0} fit="cover" className="aspect-[4/5] w-full max-w-[450px] rounded-sm shadow-2xl" />
+            </div>
           </div>
         </div>
       );
@@ -215,10 +217,11 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
               })}
             </div>
           </div>
+          {/* Griglia immagini: ora usa indici 01, 02, 03 per evitare duplicati della slide precedente */}
           <div className="h-1/3 grid grid-cols-3 gap-0 bg-black border-t-2 border-[#ff4d00]/20">
-            <Placeholder index={0} fit="contain" className="bg-black border-r border-zinc-900" />
             <Placeholder index={1} fit="contain" className="bg-black border-r border-zinc-900" />
-            <Placeholder index={2} fit="contain" className="bg-black" />
+            <Placeholder index={2} fit="contain" className="bg-black border-r border-zinc-900" />
+            <Placeholder index={3} fit="contain" className="bg-black" />
           </div>
         </div>
       );
