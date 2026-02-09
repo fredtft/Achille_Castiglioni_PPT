@@ -9,7 +9,8 @@ interface SlideRendererProps {
 export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
   
   const handleImageAction = (index: number) => {
-    const titleBase = slide.title.split(':')[0].trim().toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+    // Gestione speciale per i titoli con virgolette o nomi file storici
+    const titleBase = slide.id === '04' ? 'ironia' : slide.id === '05' ? 'ready_made' : slide.title.split(':')[0].trim().toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
     const expectedFileName = index === 0 ? `${slide.id}_${titleBase}` : `${slide.id}_${titleBase}_${index}`;
     
     navigator.clipboard.writeText(expectedFileName).then(() => {
@@ -21,8 +22,12 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
   };
 
   const Placeholder = ({ index, className = "", fit = "cover" }: { index: number; className?: string; fit?: "cover" | "contain" }) => {
-    const titleBase = slide.title.split(':')[0].trim().toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
-    const expectedFileName = index === 0 ? `${slide.id}_${titleBase}` : `${slide.id}_${titleBase}_${index}`;
+    // Mappatura manuale per garantire che le immagini rimangano corrette dopo lo swap
+    let fileNamePart = slide.title.split(':')[0].trim().toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+    if (slide.id === '04') fileNamePart = 'ironia';
+    if (slide.id === '05') fileNamePart = 'ready_made';
+    
+    const expectedFileName = index === 0 ? `${slide.id}_${fileNamePart}` : `${slide.id}_${fileNamePart}_${index}`;
     const src = `img/${expectedFileName}.jpg`;
 
     return (
@@ -113,20 +118,23 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide }) => {
 
     case SlideType.CONTENT_SPLIT:
       const isImageLeft = slide.imagePosition === 'left';
+      // Layout più compatto per slide 04 e 05
+      const isCompact = slide.id === '04' || slide.id === '05';
+      
       return (
         <div className="flex h-full w-full bg-white overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full">
-            <div className={`p-12 lg:p-24 flex flex-col justify-center space-y-10 ${isImageLeft ? 'order-2 md:order-2' : 'order-2 md:order-1'}`}>
-              <h2 className="text-5xl md:text-7xl font-black text-[#ff4d00] tracking-tighter leading-none">{slide.title}</h2>
-              <div className="space-y-8">
-                <p className="text-2xl lg:text-3xl text-zinc-800 font-light leading-snug border-l-4 border-[#ff4d00] pl-6">{slide.content}</p>
-                <div className="grid grid-cols-1 gap-8 pt-10 border-t border-zinc-100">
+            <div className={`${isCompact ? 'p-8 lg:p-16' : 'p-12 lg:p-24'} flex flex-col justify-center ${isCompact ? 'space-y-6' : 'space-y-10'} ${isImageLeft ? 'order-2 md:order-2' : 'order-2 md:order-1'}`}>
+              <h2 className={`${isCompact ? 'text-4xl md:text-6xl' : 'text-5xl md:text-7xl'} font-black text-[#ff4d00] tracking-tighter leading-none`}>{slide.title}</h2>
+              <div className={isCompact ? 'space-y-6' : 'space-y-8'}>
+                <p className={`${isCompact ? 'text-xl lg:text-2xl' : 'text-2xl lg:text-3xl'} text-zinc-800 font-light leading-snug border-l-4 border-[#ff4d00] pl-6`}>{slide.content}</p>
+                <div className={`grid grid-cols-1 ${isCompact ? 'gap-4 pt-6' : 'gap-8 pt-10'} border-t border-zinc-100`}>
                   {slide.list?.map((item, i) => {
                     const [label, val] = item.split(': ');
                     return (
                       <div key={i} className="group">
-                        <div className="text-[#ff4d00]/80 font-bold text-xs uppercase tracking-[0.3em] mb-2">{label}</div>
-                        <div className="text-zinc-600 text-xl font-light">{val}</div>
+                        <div className="text-[#ff4d00]/80 font-bold text-[10px] md:text-xs uppercase tracking-[0.3em] mb-1">{label}</div>
+                        <div className={`${isCompact ? 'text-base lg:text-lg' : 'text-zinc-600 text-xl'} font-light`}>{val}</div>
                       </div>
                     );
                   })}

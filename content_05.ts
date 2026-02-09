@@ -5,13 +5,13 @@ export const slide05: Slide = {
   id: '05',
   type: SlideType.CONTENT_SPLIT,
   imagePosition: 'left',
-  title: 'Ironia & Funzione',
-  content: 'Design serio, ma non serioso. L\'ironia serve a sdrammatizzare l\'oggetto e a renderlo più umano e comunicativo.',
-  images: ['img/05_ironia.jpg'],
+  title: 'Il "Ready Made"',
+  content: 'Castiglioni non inventava forme da zero, spesso "trovava" oggetti esistenti e li rifunzionalizzava. Il design come atto di osservazione del quotidiano.',
+  images: ['img/04_ready_made.jpg'],
   list: [
-    'Componente ludica: Il progetto deve regalare un sorriso.',
-    'Rigore funzionale: L\'ironia non deve mai compromettere l\'uso.',
-    'Interazione: L\'utente è parte attiva della funzione dell\'oggetto.'
+    'De-contestualizzazione: Spostare un oggetto dal suo ambito d\'origine.',
+    'Minimo sforzo: Utilizzare componenti già ottimizzati dall\'industria.',
+    'Sincerità: Mostrare chiaramente come l\'oggetto è costruito.'
   ],
-  notes: 'L\'ironia per Castiglioni era uno strumento di marketing ante-litteram e un modo per avvicinare il pubblico ad oggetti moderni potenzialmente "freddi".'
+  notes: 'Spiegare il parallelo con Marcel Duchamp. Castiglioni raccoglieva oggetti anonimi per capirne l\'intelligenza intriseca e riutilizzarla nei suoi progetti.'
 };
