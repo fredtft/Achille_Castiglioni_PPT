@@ -4,6 +4,7 @@ import { initialSlides } from './slidesContent';
 import { ProgressBar } from './components/ProgressBar';
 import { SlideRenderer } from './components/SlideRenderer';
 import { NotesModal } from './components/NotesModal';
+import { PrintContainer } from './components/PrintContainer';
 
 const App: React.FC = () => {
   const [slides, setSlides] = useState<Slide[]>(initialSlides);
@@ -35,11 +36,19 @@ const App: React.FC = () => {
     }
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
       if (e.key === 'ArrowLeft') prevSlide();
       if (e.key === 'f') toggleFullscreen();
+      if (e.key === 'p' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        handlePrint();
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -73,6 +82,9 @@ const App: React.FC = () => {
         />
       </main>
 
+      {/* Print rendering hidden during normal navigation */}
+      <PrintContainer slides={slides} />
+
       {/* Navigation Controls Overlay */}
       <div className="absolute bottom-2 md:bottom-8 left-2 md:left-8 right-2 md:right-8 flex justify-between items-center pointer-events-none">
         <div className="flex gap-2 md:gap-4 pointer-events-auto">
@@ -80,6 +92,7 @@ const App: React.FC = () => {
             onClick={prevSlide}
             disabled={currentIndex === 0}
             className={`w-8 h-8 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-100 hover:bg-[#ff4d00] hover:text-white hover:border-[#ff4d00] shadow-xl transition-all disabled:opacity-30`}
+            title="Precedente"
           >
             <i className="fas fa-arrow-left text-xs md:text-base"></i>
           </button>
@@ -87,6 +100,7 @@ const App: React.FC = () => {
             onClick={nextSlide}
             disabled={currentIndex === slides.length - 1}
             className={`w-8 h-8 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-100 hover:bg-[#ff4d00] hover:text-white hover:border-[#ff4d00] shadow-xl transition-all disabled:opacity-30`}
+            title="Successiva"
           >
             <i className="fas fa-arrow-right text-xs md:text-base"></i>
           </button>
@@ -94,8 +108,17 @@ const App: React.FC = () => {
 
         <div className="flex gap-1 md:gap-3 pointer-events-auto items-center">
           <button 
+            onClick={handlePrint}
+            className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-md bg-zinc-900/90 border border-zinc-800 text-zinc-400 hover:text-[#ff4d00] transition-all"
+            title="Esporta in PDF"
+          >
+            <i className="fas fa-file-pdf text-xs md:text-sm"></i>
+          </button>
+
+          <button 
             onClick={() => setShowNotes(!showNotes)}
             className={`w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-md bg-zinc-900/90 border border-zinc-800 text-zinc-400 hover:text-white transition-all ${showNotes ? 'text-[#ff4d00] border-[#ff4d00]/50' : ''}`}
+            title="Note relatore"
           >
             <i className="fas fa-sticky-note text-xs"></i>
           </button>
@@ -103,6 +126,7 @@ const App: React.FC = () => {
           <button 
             onClick={toggleFullscreen}
             className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-md bg-zinc-900/90 border border-zinc-800 text-zinc-400 hover:text-white transition-all hidden sm:flex"
+            title="Schermo intero"
           >
             <i className={`fas ${isFullscreen ? 'fa-compress' : 'fa-expand'} text-xs`}></i>
           </button>

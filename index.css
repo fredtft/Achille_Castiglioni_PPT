@@ -51,3 +51,50 @@ body {
 .animate-slide-up {
     animation: slide-up 0.3s ease-out forwards;
 }
+
+/* Print Styles */
+@media print {
+    @page {
+        size: landscape;
+        margin: 0;
+    }
+
+    body, html {
+        overflow: visible !important;
+        height: auto !important;
+        background: black !important;
+    }
+
+    #root > div > main,
+    #root > div > .fixed,
+    #root > div > .absolute {
+        display: none !important;
+    }
+
+    .print-container {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .print-slide-wrapper {
+        width: 100vw !important;
+        height: 100vh !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        position: relative !important;
+        overflow: hidden !important;
+        display: block !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Assicurati che SlideRenderer occupi tutto lo spazio */
+    .print-slide-wrapper > div {
+        height: 100% !important;
+        width: 100% !important;
+    }
+}
+
+.print-container {
+    display: none;
+}
