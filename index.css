@@ -52,96 +52,97 @@ body {
     animation: slide-up 0.3s ease-out forwards;
 }
 
-/* PRINT LOGIC - CRITICAL FIX */
+/* 
+   PRINT ENGINE OPTIMIZATION 
+   Target: A4 Landscape, zero margins, no clipping
+*/
 @media print {
     @page {
-        size: landscape;
+        size: A4 landscape;
         margin: 0;
     }
 
-    /* Reset ALL containers to allow multi-page flow */
-    html, body, #root, #root > div, .relative, main {
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Force hierarchy to be visible and flowable */
+    html, body, #root, #root > div {
         display: block !important;
         overflow: visible !important;
         height: auto !important;
-        min-height: auto !important;
-        position: static !important;
-        margin: 0 !important;
-        padding: 0 !important;
         width: 100% !important;
         background: black !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        position: static !important;
     }
 
-    /* Hide EVERYTHING that is not the print container */
+    /* Hide UI components */
+    .no-print, 
     #root > div > main,
-    #root > div > .fixed,
     #root > div > .absolute,
-    #root > div > .ProgressBar,
-    .no-print,
-    .NotesModal,
-    header, footer {
+    .ProgressBar,
+    .NotesModal {
         display: none !important;
+        visibility: hidden !important;
         height: 0 !important;
-        overflow: hidden !important;
+        width: 0 !important;
     }
 
-    /* Show ONLY the print container */
+    /* The Print Container holding all slides */
     .print-container {
         display: block !important;
-        width: 100vw !important;
+        width: 100% !important;
         height: auto !important;
         position: static !important;
         visibility: visible !important;
+        background: black !important;
     }
 
-    /* Each slide must be exactly one page */
+    /* Individual Slide Page */
     .print-slide-wrapper {
         display: block !important;
-        width: 100vw !important;
-        height: 100vh !important;
+        position: relative !important;
+        width: 297mm !important; /* Fixed A4 Width */
+        height: 210mm !important; /* Fixed A4 Height */
         page-break-after: always !important;
         break-after: page !important;
-        page-break-inside: avoid !important;
-        position: relative !important;
         overflow: hidden !important;
         background: black !important;
         margin: 0 !important;
         padding: 0 !important;
     }
 
-    /* Scale down fonts aggressively for print to ensure fit */
-    .print-slide-wrapper .print-mode {
-        font-size: 11px !important;
+    /* Internal layout fixes for Print */
+    .print-mode {
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
     }
 
-    .print-slide-wrapper h1 { 
-        font-size: 3.5rem !important; 
-        line-height: 1 !important;
-    }
-    .print-slide-wrapper h2 { 
-        font-size: 2.2rem !important; 
-        line-height: 1 !important;
-    }
-    .print-slide-wrapper p { 
-        font-size: 1rem !important; 
-        line-height: 1.4 !important;
-    }
-    
-    /* Ensure images don't push content out */
+    /* Force images to stay within bounds */
     .print-slide-wrapper img {
+        max-width: 100% !important;
         max-height: 100% !important;
+        object-fit: contain !important; /* Ensure image fits A4 without cropping */
     }
+
+    /* Text Adjustments */
+    .print-slide-wrapper h1 { font-size: 3.5rem !important; }
+    .print-slide-wrapper h2 { font-size: 2.2rem !important; }
+    .print-slide-wrapper p { font-size: 1.1rem !important; }
 }
 
-/* Modal styles for preview */
+/* UI/Preview logic */
+.print-container {
+    display: none;
+}
+
 .print-preview-overlay {
     background: rgba(0,0,0,0.95);
     backdrop-filter: blur(10px);
-}
-
-/* Hidden by default in UI, visible only in print */
-.print-container {
-    display: none;
 }
